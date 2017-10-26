@@ -36,6 +36,7 @@
 		<td> ${shift.assignedDate }</td>
 		<td> ${shift.signin}</td>
 		<td> ${shift.signout}</td>
+		<td> 
 		<a class="btn btn-success" href="/employers/edit/${shift.id}"> Edit </a>
 		<a class="btn btn-danger" href="/employers/delete/${shift.id}"> Delete </a>
 		</td>
