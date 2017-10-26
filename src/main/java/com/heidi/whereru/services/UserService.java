@@ -1,6 +1,8 @@
 package com.heidi.whereru.services;
 
 
+import java.util.List;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.heidi.whereru.models.User;
@@ -52,7 +54,9 @@ public class UserService {
 		return user.getRoles().get(0).getName();
     }
     
-    
+    public List<User> findAllEmployees(){
+    		return userRepo.findAllEmployees();
+    }
     
     
 }

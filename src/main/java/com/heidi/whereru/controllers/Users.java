@@ -6,6 +6,11 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.security.Principal;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.validation.Valid;
@@ -43,6 +48,13 @@ public class Users {
 		this.userValidator=userValidator;
 
 	}	
+
+//	public void initBinder(WebDataBinder binder) {
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		dateFormat.setLenient(false);
+//		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+//	}
+	
 	
 	@RequestMapping("/login")
 	public String forms(@RequestParam(value="error", required=false)String error, 
@@ -91,6 +103,7 @@ public class Users {
 			return "redirect:/employees/dashboard";
 		}
 	}
+
 	@RequestMapping("/employers/dashboard")
 	public String employersDashboard(@ModelAttribute("shift") Shift shift) {
 		return "employers.jsp";
@@ -108,6 +121,7 @@ public class Users {
 //		System.out.println(address);
 //		return "redirect:/employers/addLocation";
 //	}
+
 	
 	@PostMapping("/employers/addLocation")
 	public String getGeoLocation(@RequestParam("address")String address) throws Exception{
