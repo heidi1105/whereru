@@ -6,10 +6,6 @@ import javax.persistence.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-
-
-
-
 @Entity
 @Table(name="shifts")
 public class Shift {
@@ -29,10 +25,16 @@ public class Shift {
 	private Date assignedDate;
 
 	@DateTimeFormat(pattern="hh:mm")	
-	private Date signin;
+	private Date assignedSignIn;
 	
 	@DateTimeFormat(pattern="hh:mm")	
-	private Date signout;
+	private Date assignedSignOut;
+	
+	@DateTimeFormat(pattern="hh:mm")
+	private Date signIn;
+	
+	@DateTimeFormat(pattern="hh:mm")
+	private Date signOut;
 	
 	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="location_id")
@@ -68,20 +70,36 @@ public class Shift {
 		this.employee = employee;
 	}
 
-	public Date getSignin() {
-		return signin;
+	public Date getAssignedSignIn() {
+		return assignedSignIn;
 	}
 
-	public void setSignin(Date signin) {
-		this.signin = signin;
+	public void setAssignedSignIn(Date assignedSignIn) {
+		this.assignedSignIn = assignedSignIn;
 	}
 
-	public Date getSignout() {
-		return signout;
+	public Date getAssignedSignOut() {
+		return assignedSignOut;
 	}
 
-	public void setSignout(Date signout) {
-		this.signout = signout;
+	public void setAssignedSignOut(Date assignedSignOut) {
+		this.assignedSignOut = assignedSignOut;
+	}
+
+	public Date getSignIn() {
+		return signIn;
+	}
+
+	public void setSignIn(Date signIn) {
+		this.signIn = signIn;
+	}
+
+	public Date getSignOut() {
+		return signOut;
+	}
+
+	public void setSignOut(Date signOut) {
+		this.signOut = signOut;
 	}
 
 	public Location getLocation() {
@@ -127,13 +145,5 @@ public class Shift {
 	public Long getId() {
 		return id;
 	}
-
-
-
-	
-	
-	
-	
-	
 
 }
