@@ -16,6 +16,10 @@ public class Location {
 	
 	private String address;
 	
+	private Double lat;
+	
+	private Double lng;
+	
 	@OneToMany(mappedBy="location", fetch=FetchType.LAZY)
 	private List<Shift> shifts;
 	
@@ -35,6 +39,23 @@ public class Location {
 
 	public Location() {
 		
+	}
+
+	
+	public Double getLat() {
+		return lat;
+	}
+
+	public void setLat(Double lat) {
+		this.lat = lat;
+	}
+
+	public Double getLng() {
+		return lng;
+	}
+
+	public void setLng(Double lng) {
+		this.lng = lng;
 	}
 
 	public Long getId() {

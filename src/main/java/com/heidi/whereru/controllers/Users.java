@@ -50,11 +50,7 @@ public class Users {
 
 	}	
 
-//	public void initBinder(WebDataBinder binder) {
-//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//		dateFormat.setLenient(false);
-//		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-//	}
+
 	
 	
 	@RequestMapping("/login")
@@ -112,52 +108,23 @@ public class Users {
 		model.addAttribute("address", address);
 		return "location.jsp";
 	}
-//	
-//	@PostMapping("employers/addLocation")
-//	public String createLocation(@RequestParam("name") String name, @RequestParam("address")String address) {
-//		System.out.println(name);
-//		System.out.println(address);
-//		return "redirect:/employers/addLocation";
-//	}
 
 	
-	@PostMapping("/employers/addLocation")
-	public String getGeoLocation(@RequestParam("address")String address) throws Exception{
-		String newAddress = address.replaceAll("\\s","");
-		String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + newAddress + "&key=AIzaSyA6GV4vn8fPfAwYa1BHw1yYeygwSFXW5tQ";
-		URL obj = new URL(url);
-		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-		
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'GET' request to URL : " + url);
-	    System.out.println("Response Code : " + responseCode);
-	    
-	    BufferedReader in = new BufferedReader(
-	            new InputStreamReader(con.getInputStream()));
-	    String inputLine;
-	    StringBuffer response = new StringBuffer();
-
-	    while ((inputLine = in.readLine()) != null) {
-	        response.append(inputLine);
-	    }
-	    in.close();
-
-	    System.out.println(response.toString());
-
-	    
-	    
-	    
-	    GsonBuilder builder = new GsonBuilder();
-	    builder.setPrettyPrinting();
-
-	    Gson gson = builder.create();	    
-	    GeoResponse numbers = gson.fromJson(response.toString(), GeoResponse.class);
-	    System.out.println("lat:" + numbers.results.get(0).geometry.location.lat);
-	    System.out.println("lng:" + numbers.results.get(0).geometry.location.lng);
-
-	    
-	    return "redirect:/employers/addLocation";
+	@RequestMapping("/currentLocation")
+	public String getCurrentLocation() {
+		return "currentlocation.jsp";
 	}
+	
+	@RequestMapping("/process/signIn")
+	public String createSignIn(@RequestParam("lng") Double lng, @RequestParam("lat") Double lat) {
+		System.out.println("got here");
+		System.out.println(lng);
+		System.out.println(lat);
+		return "redirect:/currentLocation";
+	}
+    
+
+
 
 
 }
