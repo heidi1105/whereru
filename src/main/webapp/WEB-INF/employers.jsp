@@ -25,7 +25,9 @@
 		<th> Employee  </th>
 		<th> Shift Date </th>
 		<th> Shift Time In </th>
-		<th> SHift Time Out </th>
+		<th> Shift Time Out </th>
+		<th> Actual Time In </th>
+		<th> Actual Time Out</th>
 		<th> Actions </th>
 	</tr>
 </thead>
@@ -34,22 +36,20 @@
 	<tr>
 		<td> ${shift.employee.firstname} ${shift.employee.lastname } </td>
 		<td> ${shift.assignedDate }</td>
-		<td> ${shift.signin}</td>
-		<td> ${shift.signout}</td>
-		<td> 
+		<td> ${shift.assignedSignIn}</td>
+		<td> ${shift.assignedSignOut}</td>
+		<td> ${shift.signIn}</td>
+		<td> ${shift.signOut}</td>
+		<td>
 		<a class="btn btn-success" href="/employers/edit/${shift.id}"> Edit </a>
 		<a class="btn btn-danger" href="/employers/delete/${shift.id}"> Delete </a>
 		</td>
 	</tr>
 	</c:forEach>
-
 </tbody>
-
-
 </table>
 
-
-
+<hr>
 
 <p><form:errors class="errors" path="shift.*"/></p>
 <fieldset>
