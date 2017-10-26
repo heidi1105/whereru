@@ -1,6 +1,7 @@
 package com.heidi.whereru.controllers;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,13 @@ public class Users {
 		this.userValidator=userValidator;
 
 	}	
+
+//	public void initBinder(WebDataBinder binder) {
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		dateFormat.setLenient(false);
+//		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+//	}
+	
 	
 	@RequestMapping("/login")
 	public String forms(@RequestParam(value="error", required=false)String error, 
@@ -82,11 +90,7 @@ public class Users {
 			return "redirect:/employees/dashboard";
 		}
 	}
-	@RequestMapping("/employers/dashboard")
-	public String employersDashboard(@ModelAttribute("shift") Shift shift) {
-		return "employers.jsp";
-	}
-	
+
 
 	
 	
