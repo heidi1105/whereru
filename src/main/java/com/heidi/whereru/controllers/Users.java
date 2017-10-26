@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.heidi.whereru.models.GeoResponse;
 import com.heidi.whereru.models.GoogleResponse;
 import com.heidi.whereru.models.Location;
 import com.heidi.whereru.models.Shift;
@@ -104,10 +105,7 @@ public class Users {
 		}
 	}
 
-	@RequestMapping("/employers/dashboard")
-	public String employersDashboard(@ModelAttribute("shift") Shift shift) {
-		return "employers.jsp";
-	}
+
 	
 	@RequestMapping("/employers/addLocation")
 	public String addLocation(@ModelAttribute("location") Location location, @RequestParam(value="address", required=false, defaultValue="Los Angeles") String address, Model model) {
@@ -146,61 +144,20 @@ public class Users {
 
 	    System.out.println(response.toString());
 
+	    
+	    
+	    
 	    GsonBuilder builder = new GsonBuilder();
 	    builder.setPrettyPrinting();
-//
-	    Gson gson = builder.create();
-	    GoogleResponse numbers = gson.fromJson(response.toString(), GoogleResponse.class);
-	    System.out.println(numbers.getResults());
-//	    System.out.println(intoken.getAccess_token());
-//	    String getInfo = "https://api.instagram.com/oauth/authorize/?client_id=34b735fb437e48d891c05ced7e4c6846&"
-//	            + "redirect_uri=http://localhost:8080/instalogin"
-//	            + "&scope=public_content"
-//	            + "&response_type=token";
-////	        http://your-redirect-uri#access_token=ACCESS-TOKEN
-//	//https://api.instagram.com/oauth/authorize/?client_id=34b735fb437e48d891c05ced7e4c6846&redirect_uri=http://localhost:8080/instalogin&response_type=token        
-//	    String info2 = "https://api.instagram.com/v1/locations/search?lat=48.858844&lng=2.294351&access_token="+intoken.getAccess_token();
-//
-//	    // model.addAttribute("access", intoken.getAccess_token());
-//
-//
-//	    return "login.jsp";
-//
-//
-////	    return "login.jsp";
+
+	    Gson gson = builder.create();	    
+	    GeoResponse numbers = gson.fromJson(response.toString(), GeoResponse.class);
+	    System.out.println("lat:" + numbers.results.get(0).geometry.location.lat);
+	    System.out.println("lng:" + numbers.results.get(0).geometry.location.lng);
+
 	    
 	    return "redirect:/employers/addLocation";
 	}
-//	public static GeoPoint getGeoPointFromAddress(@RequestParam("address")String address) {
-//		GeoPoint locationPoint = null;
-//        String addy = address.replaceAll(" ", "%20");
-//        String str = "http://maps.googleapis.com/maps/api/geocode/json?address="
-//                + addy + "&sensor=true";
-//
-//        String ss = readWebService(str);
-//        JSONObject json;
-//        try {
-//
-//            String lat, lon;
-//            json = new JSONObject(ss);
-//            JSONObject geoMetryObject = new JSONObject();
-//            JSONObject locations = new JSONObject();
-//            JSONArray jarr = json.getJSONArray("results");
-//            int i;
-//            for (i = 0; i < jarr.length(); i++) {
-//                json = jarr.getJSONObject(i);
-//                geoMetryObject = json.getJSONObject("geometry");
-//                locations = geoMetryObject.getJSONObject("location");
-//                lat = locations.getString("lat");
-//                lon = locations.getString("lng");
-//
-//                locationPoint = Utils.getGeoPoint(Double.parseDouble(lat),
-//                        Double.parseDouble(lon));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return locationPoint;
-//    }
+
 
 }
