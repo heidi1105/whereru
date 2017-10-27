@@ -131,14 +131,17 @@ public class Users {
 	
 	@RequestMapping("/employees/currentLocation")
 	public String getCurrentLocation(Model model, Principal principal) {
-
-		model.addAttribute("currentUser", userService.findByUsername(principal.getName()));
+		User currentUser = userService.findByUsername(principal.getName());
+		model.addAttribute("shift", userService.findShiftsByEmployee(currentUser.getId()));
+		model.addAttribute("currentUser", currentUser);
 		return "currentlocation.jsp";
 	}
 	
 	@RequestMapping("/process/signIn")
 	public String createSignIn(@RequestParam("lng") Double lng, @RequestParam("lat") Double lat, Principal principal) {
-		System.out.println("got here");
+		
+		
+		
 		System.out.println(lng);
 		System.out.println(lat);
 		

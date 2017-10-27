@@ -81,6 +81,24 @@ public class Employers {
 		return "redirect:/employers/dashboard";
 	}
 	
+	@RequestMapping("/employees/sign/{id}")
+	public String sign(@PathVariable("id")Long id, Principal principal, @RequestParam("latitude")Double lat, @RequestParam("longitude")Double lng) {
+		User currentUser = userService.findByUsername(principal.getName());
+		if (userService.signShift(id, currentUser.getId(), lat, lng) =="success") {
+			return "redirect:/employees/currentLocation";			
+		}else {
+			return "redirect:/employees/liar";
+		}
+
+		
+	}
+	
+	@RequestMapping("/employees/liar")
+	public String liar(Principal principal, Model model) {
+		User currentUser = userService.findByUsername(principal.getName());
+		model.addAttribute("currentUser", currentUser);
+		return "liar.jsp";
+	}
 	
 
 	

@@ -16,6 +16,7 @@
 
 <div>
 
+
  <form action="/employers/createLocation" method="post"> 
 	<p> Name of the location <input type="text" name="name" /> </p>
     
