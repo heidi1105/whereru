@@ -19,7 +19,7 @@
         <button class="btn btn-warning" type="submit"> Logout</button>
     </form>
 <h1 class="jumbotron">${currentUser.firstname} , You are a liar!!!!!!! Go back to your shift! Stop eating fries</h1>
-<a href="/employees/currentLocation" class="btn btn-block btn-warning"> Go back and try again</a>
+<a href="/employees/dashboard" class="btn btn-block btn-warning"> Go back and try again</a>
 
 </body>
 </html>

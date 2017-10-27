@@ -99,6 +99,7 @@ public class UserService {
     
     public String signShift(Long shiftId, Long employeeId, Double lat, Double lng) {
     		Shift sign = shiftRepo.findOne(shiftId);
+
     		if (Math.abs(sign.getLocation().getLat()-lat) < 0.0003 && Math.abs(sign.getLocation().getLng()-lng) < 0.0003) {
         		if (sign.getEmployee()== userRepo.findOne(employeeId)) {
         			if (sign.getSignIn()==null) {

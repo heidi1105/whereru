@@ -46,8 +46,8 @@
 				<td> <fmt:formatDate pattern="MM/dd/yyyy" value="${shift.assignedDate}" /></td>
 				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedSignIn}" /></td>
 				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedSignOut}" /></td>
-				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedDate}" /></td>
-				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedDate}" /></td>
+				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.signIn}" /></td>
+				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.signOut}" /></td>
 				<td>
 					<a class="btn btn-success" href="/employers/edit/${shift.id}"> Edit </a>
 					<a class="btn btn-danger" href="/employers/delete/${shift.id}"> Delete </a>

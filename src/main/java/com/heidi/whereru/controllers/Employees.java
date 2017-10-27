@@ -69,6 +69,23 @@ public class Employees {
 		}
 	}
 	
+	@RequestMapping("/employees/shift/sign")
+	public String shiftSign(@RequestParam("shift")Long id, Principal principal, @RequestParam("latitude")Double lat, @RequestParam("longitude")Double lng) {
+		System.out.println("here");
+		if (lat ==null) {
+			System.out.println("did not get the location");
+			return "redirect:/employees/dashboard";
+		}
+		User currentUser = userService.findByUsername(principal.getName());
+		if (userService.signShift(id, currentUser.getId(), lat, lng) =="success") {
+			return "redirect:/employees/dashboard";			
+		}else {
+			return "redirect:/employees/liar";
+		}
+	}
+	
+	
+	
 	@RequestMapping("/employees/liar")
 	public String liar(Principal principal, Model model) {
 		User currentUser = userService.findByUsername(principal.getName());
