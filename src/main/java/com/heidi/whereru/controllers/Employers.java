@@ -80,6 +80,7 @@ public class Employers {
 		userService.removeShift(id);
 		return "redirect:/employers/dashboard";
 	}
+
 	
 	@RequestMapping("/employees/sign/{id}")
 	public String sign(@PathVariable("id")Long id, Principal principal, @RequestParam("latitude")Double lat, @RequestParam("longitude")Double lng) {
@@ -104,8 +105,15 @@ public class Employers {
 	
 
 	
-	
-	
+
+	@RequestMapping("/employers/edit/{id}")
+	public String getShift(@PathVariable("id")Long id, @ModelAttribute("shift")Shift shift, Model model) {
+		model.addAttribute("shift", userService.findShiftById(id));
+		model.addAttribute("employees", userService.findAllEmployees());
+		model.addAttribute("locations", userService.findAllLocation());
+		return "editShift.jsp";
+	}
+
 	
 
 }
