@@ -27,6 +27,7 @@
 <thead>
 	<tr>
 		<th> Employee  </th>
+		<th> Location </th>
 		<th> Shift Date </th>
 		<th> Shift Time In </th>
 		<th> Shift Time Out </th>
@@ -42,6 +43,7 @@
 		<c:if test="${date lt today}">
 			<tr>
 				<td> ${shift.employee.firstname} ${shift.employee.lastname } </td>
+				<td> ${shift.location.name }</td>
 				<td> <fmt:formatDate pattern="MM/dd/yyyy" value="${shift.assignedDate}" /></td>
 				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedSignIn}" /></td>
 				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedSignOut}" /></td>
