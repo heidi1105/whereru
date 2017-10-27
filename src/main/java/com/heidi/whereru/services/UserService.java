@@ -87,5 +87,9 @@ public class UserService {
     public void removeShift(Long id) {
     		shiftRepo.delete(id);
     }
+
+	public Shift findShiftById(Long id) {
+		return shiftRepo.findShiftById(id);
+	}
     
 }

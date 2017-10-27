@@ -80,14 +80,13 @@ public class Employers {
 		userService.removeShift(id);
 		return "redirect:/employers/dashboard";
 	}
-	
-	
-
-	
-
-	
-	
-	
+	@RequestMapping("/employers/edit/{id}")
+	public String getShift(@PathVariable("id")Long id, @ModelAttribute("shift")Shift shift, Model model) {
+		model.addAttribute("shift", userService.findShiftById(id));
+		model.addAttribute("employees", userService.findAllEmployees());
+		model.addAttribute("locations", userService.findAllLocation());
+		return "editShift.jsp";
+	}
 	
 
 }
