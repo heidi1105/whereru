@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,27 +47,38 @@ public class Employers {
 
 	
 	@RequestMapping("/employers/dashboard")
-	public String employersDashboard(@ModelAttribute("shift") Shift shift, Model model) {
+	public String employersDashboard(@ModelAttribute("shift") Shift shift, Model model, Principal principal) {
+		User currentUser = userService.findByUsername(principal.getName());
+		model.addAttribute("currentUser", currentUser);
 		model.addAttribute("employees", userService.findAllEmployees());
+		model.addAttribute("locations", userService.findAllLocation());
+		model.addAttribute("shifts", userService.findShiftsByEmployer(currentUser.getId()));
 		return "employers.jsp";
 	}
 	
 	@PostMapping("/employers/dashboard")
 	public String addShift(@Valid @ModelAttribute("shift")Shift shift, BindingResult result, Principal principal, Model model) {
 		if (result.hasErrors()) {
+			User currentUser = userService.findByUsername(principal.getName());
+			model.addAttribute("currentUser", currentUser);
 			model.addAttribute("employees", userService.findAllEmployees());
+			model.addAttribute("locations", userService.findAllLocation());
+			model.addAttribute("shifts", userService.findShiftsByEmployer(currentUser.getId()));
+			
 			return "employers.jsp";				
 		}else {
-			
-			
-			System.out.println(shift.getAssignedDate());
-			System.out.println(shift.getAssignedSignIn());
-			System.out.println(shift.getAssignedSignOut());
+
+			userService.addShift(shift);
 			
 			return "redirect:/employers/dashboard";
 		}
 		
+	}
 	
+	@RequestMapping("/employers/delete/{id}")
+	public String removeShift(@PathVariable("id")Long id) {
+		userService.removeShift(id);
+		return "redirect:/employers/dashboard";
 	}
 	
 	

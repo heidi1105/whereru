@@ -20,7 +20,7 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button class="btn btn-warning" type="submit"> Logout</button>
     </form>
-<h1>Welcome ${currentUser}</h1>
+<h1>Welcome ${currentUser.firstname}</h1>
 <table class="table table-hover table-striped">
 <thead>
 	<tr>
@@ -37,11 +37,11 @@
 	<c:forEach var="shift" items="${shifts}">
 	<tr>
 		<td> ${shift.employee.firstname} ${shift.employee.lastname } </td>
-		<td> ${shift.assignedDate }</td>
-		<td> ${shift.assignedSignIn}</td>
-		<td> ${shift.assignedSignOut}</td>
-		<td> ${shift.signIn}</td>
-		<td> ${shift.signOut}</td>
+		<td> <fmt:formatDate pattern="MM/dd/yyyy" value="${shift.assignedDate}" /></td>
+		<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedSignIn}" /></td>
+		<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedSignOut}" /></td>
+		<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedDate}" /></td>
+		<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedDate}" /></td>
 		<td>
 		<a class="btn btn-success" href="/employers/edit/${shift.id}"> Edit </a>
 		<a class="btn btn-danger" href="/employers/delete/${shift.id}"> Delete </a>
@@ -69,7 +69,7 @@
 		</form:select>
 	</p>
 	<p>Assigned shift date
-		<form:input type="date" path="assignedDate" min="<%=new Date() %>"/></p>
+		<form:input type="date" path="assignedDate" min="<%=new Date()%>"/></p>
 	<p> Assigned sign in time
 		<form:input type="time" path="assignedSignIn" /> (hh:mm AM/PM)
 	</p>

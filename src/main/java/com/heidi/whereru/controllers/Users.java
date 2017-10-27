@@ -109,6 +109,25 @@ public class Users {
 		return "location.jsp";
 	}
 
+
+	
+
+	
+	@PostMapping("/employers/createLocation")
+	public String createLocation(@RequestParam("name")String name, 
+			@RequestParam("latitude")Double lat, 
+			@RequestParam("address")String address,
+			@RequestParam("longitude")Double lng) {
+
+		Location loc = new Location();
+		loc.setAddress(address);
+		loc.setLat(lat);
+		loc.setLng(lng);
+		loc.setName(name);
+		userService.saveLocation(loc);
+		return "redirect:/employers/dashboard";
+	}
+	
 	
 	@RequestMapping("/employees/currentLocation")
 	public String getCurrentLocation(Model model, Principal principal) {

@@ -20,6 +20,9 @@ public class Location {
 	
 	private Double lng;
 	
+	
+	
+	
 	@OneToMany(mappedBy="location", fetch=FetchType.LAZY)
 	private List<Shift> shifts;
 	
