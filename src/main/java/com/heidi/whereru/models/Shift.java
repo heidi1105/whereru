@@ -40,9 +40,7 @@ public class Shift {
 	@JoinColumn(name="location_id")
 	private Location location;	
 	
-	
 
-	
 	@Column(updatable=false)
 	private Date createdAt;
 	

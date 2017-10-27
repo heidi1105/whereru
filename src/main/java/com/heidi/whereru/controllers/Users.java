@@ -1,37 +1,17 @@
 package com.heidi.whereru.controllers;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.security.Principal;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
-
-
-import javax.net.ssl.HttpsURLConnection;
 import javax.validation.Valid;
 
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.heidi.whereru.models.GeoResponse;
-import com.heidi.whereru.models.GoogleResponse;
-import com.heidi.whereru.models.Location;
-import com.heidi.whereru.models.Shift;
 import com.heidi.whereru.models.User;
 import com.heidi.whereru.services.UserService;
 import com.heidi.whereru.validators.UserValidator;
@@ -97,57 +77,9 @@ public class Users {
 		} else if(role.equals("ROLE_EMPLOYER")) {
 			return "redirect:/employers/dashboard";
 		}else {
-			return "redirect:/employees/currentLocation";
+			return "redirect:/employees/dashboard";
 		}
 	}
-
-
-	
-	@RequestMapping("/employers/addLocation")
-	public String addLocation(@ModelAttribute("location") Location location, @RequestParam(value="address", required=false, defaultValue="Los Angeles") String address, Model model) {
-		model.addAttribute("address", address);
-		return "location.jsp";
-	}
-
-
-	
-
-	
-	@PostMapping("/employers/createLocation")
-	public String createLocation(@RequestParam("name")String name, 
-			@RequestParam("latitude")Double lat, 
-			@RequestParam("address")String address,
-			@RequestParam("longitude")Double lng) {
-
-		Location loc = new Location();
-		loc.setAddress(address);
-		loc.setLat(lat);
-		loc.setLng(lng);
-		loc.setName(name);
-		userService.saveLocation(loc);
-		return "redirect:/employers/dashboard";
-	}
-	
-	
-	@RequestMapping("/employees/currentLocation")
-	public String getCurrentLocation(Model model, Principal principal) {
-		User currentUser = userService.findByUsername(principal.getName());
-		model.addAttribute("shift", userService.findShiftsByEmployee(currentUser.getId()));
-		model.addAttribute("currentUser", currentUser);
-		return "currentlocation.jsp";
-	}
-	
-	@RequestMapping("/process/signIn")
-	public String createSignIn(@RequestParam("lng") Double lng, @RequestParam("lat") Double lat, Principal principal) {
-		
-		
-		
-		System.out.println(lng);
-		System.out.println(lat);
-		
-		return "redirect:/currentLocation";
-	}
-    
 
 	
 }

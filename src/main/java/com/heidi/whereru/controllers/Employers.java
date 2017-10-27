@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.heidi.whereru.models.Location;
 import com.heidi.whereru.models.Shift;
 import com.heidi.whereru.models.User;
 import com.heidi.whereru.services.UserService;
@@ -28,9 +29,6 @@ import com.heidi.whereru.validators.UserValidator;
 @Controller
 public class Employers {
 	private UserService userService;
-	
-
-	
 	
 	public Employers(UserService userService) {
 		this.userService = userService;
@@ -75,36 +73,35 @@ public class Employers {
 		
 	}
 	
+	@RequestMapping("/employers/addLocation")
+	public String addLocation(@ModelAttribute("location") Location location, @RequestParam(value="address", required=false, defaultValue="Los Angeles") String address, Model model) {
+		model.addAttribute("address", address);
+		return "location.jsp";
+	}
+
+	
+	@PostMapping("/employers/createLocation")
+	public String createLocation(@RequestParam("name")String name, 
+			@RequestParam("latitude")Double lat, 
+			@RequestParam("address")String address,
+			@RequestParam("longitude")Double lng) {
+
+		Location loc = new Location();
+		loc.setAddress(address);
+		loc.setLat(lat);
+		loc.setLng(lng);
+		loc.setName(name);
+		userService.saveLocation(loc);
+		return "redirect:/employers/dashboard";
+	}
+	
+	
 	@RequestMapping("/employers/delete/{id}")
 	public String removeShift(@PathVariable("id")Long id) {
 		userService.removeShift(id);
 		return "redirect:/employers/dashboard";
 	}
 
-	
-	@RequestMapping("/employees/sign/{id}")
-	public String sign(@PathVariable("id")Long id, Principal principal, @RequestParam("latitude")Double lat, @RequestParam("longitude")Double lng) {
-		User currentUser = userService.findByUsername(principal.getName());
-		if (userService.signShift(id, currentUser.getId(), lat, lng) =="success") {
-			return "redirect:/employees/currentLocation";			
-		}else {
-			return "redirect:/employees/liar";
-		}
-
-		
-	}
-	
-	@RequestMapping("/employees/liar")
-	public String liar(Principal principal, Model model) {
-		User currentUser = userService.findByUsername(principal.getName());
-		model.addAttribute("currentUser", currentUser);
-		return "liar.jsp";
-	}
-	
-
-	
-
-	
 
 	@RequestMapping("/employers/edit/{id}")
 	public String getShift(@PathVariable("id")Long id, @ModelAttribute("shift")Shift shift, Model model) {
@@ -112,6 +109,16 @@ public class Employers {
 		model.addAttribute("employees", userService.findAllEmployees());
 		model.addAttribute("locations", userService.findAllLocation());
 		return "editShift.jsp";
+	}
+	
+	@RequestMapping("/employers/previousShifts")
+	public String previousShifts(@ModelAttribute("shift") Shift shift, Model model, Principal principal) {
+		User currentUser = userService.findByUsername(principal.getName());
+		model.addAttribute("currentUser", currentUser);
+		model.addAttribute("employees", userService.findAllEmployees());
+		model.addAttribute("locations", userService.findAllLocation());
+		model.addAttribute("shifts", userService.findShiftsByEmployer(currentUser.getId()));
+		return "previousShifts.jsp";
 	}
 
 	

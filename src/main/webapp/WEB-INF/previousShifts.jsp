@@ -10,18 +10,18 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
-	<title>Employers</title>
+	<title>Previous Shifts</title>
 </head>
 <body>
-<h1 class="jumbotron">  Dashboard</h1>
+<h1 class="jumbotron blue">  Dashboard</h1>
 
 <div class="container">
     <form style="display:inline-block" id="logoutForm" method="POST" action="/logout">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button class="btn btn-warning" type="submit"> Logout</button>
     </form>
-    <a class="btn btn-info" href="/employers/previousShifts">Previous Shifts</a>
-    <a class="btn btn-primary" href="/employers/addLocation">Add Location</a>
+    
+    <a class="btn btn-primary" href="/employers/dashboard">Dashboard</a>
 <h1>Welcome ${currentUser.firstname}</h1>
 <table class="table table-hover table-striped">
 <thead>
@@ -40,7 +40,7 @@
 		<jsp:useBean id="now" class="java.util.Date" />
 		<fmt:formatDate var="today" value="${now}" pattern="yyyy-MM-dd" />
 		<fmt:formatDate var="date" value="${shift.assignedDate}" pattern="yyy-MM-dd"/>
-		<c:if test="${date gt today || date eq today}">
+		<c:if test="${date lt today}">
 			<tr>
 				<td> ${shift.employee.firstname} ${shift.employee.lastname } </td>
 				<td> <fmt:formatDate pattern="MM/dd/yyyy" value="${shift.assignedDate}" /></td>
@@ -61,39 +61,6 @@
 
 </table>
 
-
-
-
-<p><form:errors class="errors" path="shift.*"/></p>
-<fieldset>
-<legend> Add Shift </legend>
-<form:form action="/employers/dashboard" method="post" modelAttribute="shift">
-	<p><form:label path="employee"/>
-		<form:select path="employee">
-			<c:forEach items="${employees}" var="employee">
-				<form:option value="${employee.id}">${employee.firstname} ${employee.lastname}</form:option>
-			</c:forEach>
-		</form:select>
-	</p>
-	<p>Assigned shift date
-		<form:input type="date" path="assignedDate" min="<%=new Date()%>"/></p>
-	<p> Assigned sign in time
-		<form:input type="time" path="assignedSignIn" /> (hh:mm AM/PM)
-	</p>
-	<p> Assigned sign out time
-			<form:input type="time" path="assignedSignOut" /> (hh:mm AM/PM)
-	</p>
-	<p><form:label path="location"/>
-		<form:select path="location">
-			<c:forEach items="${locations}" var="location">
-				<form:option value="${location.id}"> ${location.address}</form:option>
-			</c:forEach>
-		</form:select>
-	</p>
-	<form:hidden path="employer" value="${currentUser.id}"/>
-<button class="btn btn-success" type="submit"> Create a Shift </button>
-</form:form> 
-</fieldset>
 
 
 </body>
