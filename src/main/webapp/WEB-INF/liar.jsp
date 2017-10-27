@@ -9,19 +9,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Employee Dashboard</title>
 <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+		$(".logo_popup").hide()
+        $(".logo_popup").fadeIn(10000, function(){
+            
+        });
+    });
+
+</script>
 </head>
 <body>
-
-
 <div class="container">
+
+ <div class="text-center">
+<img class="logo_popup" src="/img/logo-no-background.png" alt="logo"/> </div>
+  
+<a href="/employees/dashboard" class="btn btn-block btn-warning"> Go back and try again</a>
     <form id="logoutForm" method="POST" action="/logout">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <button class="btn btn-warning" type="submit"> Logout</button>
+        <button class="btn btn-success btn-block" type="submit"> Logout</button>
     </form>
-<h1 class="jumbotron">${currentUser.firstname} , You are a liar!!!!!!! Go back to your shift! Stop eating fries</h1>
-<a href="/employees/dashboard" class="btn btn-block btn-warning"> Go back and try again</a>
 
-<img src="/img/logo-no-background.png" alt="logo"/>
 
 
 </body>

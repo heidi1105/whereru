@@ -12,3 +12,7 @@
 .jumbotron h1{
 	display: inline-block;
 }
+
+.logo_popup{
+	float:top;
+}
