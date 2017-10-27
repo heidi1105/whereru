@@ -97,7 +97,7 @@ public class Users {
 		} else if(role.equals("ROLE_EMPLOYER")) {
 			return "redirect:/employers/dashboard";
 		}else {
-			return "redirect:/employees/dashboard";
+			return "redirect:/employees/currentLocation";
 		}
 	}
 
@@ -110,21 +110,27 @@ public class Users {
 	}
 
 	
-	@RequestMapping("/currentLocation")
-	public String getCurrentLocation() {
+	@RequestMapping("/employees/currentLocation")
+	public String getCurrentLocation(Model model, Principal principal) {
+
+		model.addAttribute("currentUser", userService.findByUsername(principal.getName()));
 		return "currentlocation.jsp";
 	}
 	
 	@RequestMapping("/process/signIn")
-	public String createSignIn(@RequestParam("lng") Double lng, @RequestParam("lat") Double lat) {
+	public String createSignIn(@RequestParam("lng") Double lng, @RequestParam("lat") Double lat, Principal principal) {
 		System.out.println("got here");
 		System.out.println(lng);
 		System.out.println(lat);
+		
 		return "redirect:/currentLocation";
 	}
     
 
-
-
-
+	
 }
+
+
+
+
+

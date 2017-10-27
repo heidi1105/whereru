@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
     <meta charset="utf-8">
     <title>Places Searchbox</title>
     <script
@@ -14,9 +16,10 @@
     
     
    <body>
-<h1>A super-simple geolocatio&#8203;n example</h1>
+<h1 class="jumbotron"> Where R U? ${currentUser.firstname} ${currentUser.lastname
+} </h1>
 <i class="fa fa-map-marker"></i>
-<button class="pure-button pure-button-primary">Get my location</button>
+<button class="pure-button button btn btn-success btn-block">Get my location</button>
 <div class="result"></div>
 <script type="text/javascript">
     /** NOTE: uses jQuery for quick & easy DOM manipulation **/
@@ -99,6 +102,12 @@
       getLocation();
     });
     </script>
+
+    <form id="logoutForm" method="POST" action="/logout">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <button class="btn btn-danger btn-block" type="submit"> Logout</button>
+    </form>
+
 
   </body>
 </html>
