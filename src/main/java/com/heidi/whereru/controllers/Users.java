@@ -2,11 +2,13 @@ package com.heidi.whereru.controllers;
 
 import java.security.Principal;
 
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +32,6 @@ public class Users {
 
 	}	
 
-
-	
 	
 	@RequestMapping("/login")
 	public String forms(@RequestParam(value="error", required=false)String error, 
@@ -69,16 +69,30 @@ public class Users {
 	
 	@RequestMapping("/")
 	public String firstPage(Model model, Principal principal) {
-		String username = principal.getName();
-		User currentUser = 	userService.findByUsername(username)	;
-		String role = userService.checkRole(currentUser);
-		if (role.equals("ROLE_ADMIN")) {
-			return "redirect:/admin";
-		} else if(role.equals("ROLE_EMPLOYER")) {
-			return "redirect:/employers/dashboard";
-		}else {
-			return "redirect:/employees/dashboard";
+		try {
+			if (principal.getName() == null) {
+				return "redirect:/homepage";
+			}
+			else {
+			String username = principal.getName();
+			User currentUser = 	userService.findByUsername(username)	;
+			String role = userService.checkRole(currentUser);
+			if (role.equals("ROLE_ADMIN")) {
+				return "redirect:/admin";
+			} else if(role.equals("ROLE_EMPLOYER")) {
+				return "redirect:/employers/dashboard";
+			} else{
+				return "redirect:/employees/dashboard";
+			}
+			}
 		}
+		catch (Exception e) {
+			return "redirect:/homepage";
+		}
+	}
+	@RequestMapping("/homepage")
+	public String homePage() {
+		return "homepage.jsp";
 	}
 
 	

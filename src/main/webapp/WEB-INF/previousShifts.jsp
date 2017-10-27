@@ -32,7 +32,6 @@
 		<th> Shift Time Out </th>
 		<th> Actual Time In </th>
 		<th> Actual Time Out</th>
-		<th> Actions </th>
 	</tr>
 </thead>
 <tbody>
@@ -48,10 +47,7 @@
 				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedSignOut}" /></td>
 				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedDate}" /></td>
 				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedDate}" /></td>
-				<td>
-					<a class="btn btn-success" href="/employers/edit/${shift.id}"> Edit </a>
-					<a class="btn btn-danger" href="/employers/delete/${shift.id}"> Delete </a>
-				</td>
+
 			</tr>
 		</c:if>
 	</c:forEach>
