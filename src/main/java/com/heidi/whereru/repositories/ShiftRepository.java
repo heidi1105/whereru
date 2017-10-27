@@ -16,12 +16,13 @@ public interface ShiftRepository extends CrudRepository<Shift, Long> {
 	@Query("SELECT s FROM Shift s JOIN s.employer e WHERE e.id=?1")
 	List<Shift> findbyEmployerId(Long id);
 	
-	@Query("SELECT s FROM Shift s JOIN s.employee e WHERE e.id=?1")
+	@Query("SELECT s FROM Shift s JOIN s.employee e WHERE e.id=?1 and s.signOut=null")
 	List<Shift> findByEmployeeId(Long id);
 
 	Shift findShiftById(Long id);
 	
-
+	@Query("SELECT s FROM Shift s JOIN s.employee e WHERE e.id=?1")
+	List<Shift> findPreviousByEmployeeId(Long id);
 	
 //	List<Shift> findbyEmployee(User employee);
 	

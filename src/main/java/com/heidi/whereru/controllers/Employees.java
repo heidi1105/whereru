@@ -93,4 +93,13 @@ public class Employees {
 		return "liar.jsp";
 	}
 
+	@RequestMapping("/employees/previousShifts")
+	public String EPreviousShifts(@ModelAttribute("shift") Shift shift, Model model, Principal principal) {
+		User currentUser = userService.findByUsername(principal.getName());
+		model.addAttribute("currentUser", currentUser);
+		model.addAttribute("shifts", userService.findPreviousShiftsByEmployee(currentUser.getId()));
+		return "EmployeesPreviousShifts.jsp";
+	}
+	
+	
 }

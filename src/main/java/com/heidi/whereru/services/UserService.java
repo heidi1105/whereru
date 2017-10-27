@@ -97,6 +97,10 @@ public class UserService {
     		return shiftRepo.findByEmployeeId(id);
     }
     
+    public List<Shift> findPreviousShiftsByEmployee(Long id){
+    		return shiftRepo.findPreviousByEmployeeId(id);
+    }
+    
     public String signShift(Long shiftId, Long employeeId, Double lat, Double lng) {
     		Shift sign = shiftRepo.findOne(shiftId);
 
