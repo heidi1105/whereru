@@ -11,26 +11,30 @@
 </head>
 <body>
 <div class="container">
-	<h1> Add A Location</h1>
+	
+	<div class="top">
+	<div class="col-md-4 col-md-offset-6 logo">
+	<img src="/img/logo_grey2.png" class="logoImg"></div>
+	</div>
+
+<div class="col-md-4 col-md-offset-6 middleForm">
 
 
-<div>
-
-
- <form action="/employers/createLocation" method="post"> 
-	<p> Name of the location <input type="text" name="name" /> </p>
+ <form action="/employers/createLocation" method="post" class="form-group"> 
+ <h1> Add A Location</h1>
+	<p> <input type="text" name="name" class="form-control" placeholder="Name of the location"/> </p>
     
-    <input id="address" name="address" type="text" placeholder="Enter address here" />
-    <button id="btn" type="button">Get LatLong</button>
+    <p><input id="address" name="address" type="text" placeholder="Enter address here" class="form-control"/></p>
+    <p> <button id="btn" type="button" class="btn btn-secondary btn-block">Get LatLong</button></p>
     <div>
         <p>Latitude:
             <input type="text" id="latitude" name="latitude" readonly />
         </p>
         <p>Longitude:
-            <input type="text" id="longitude" name="longitude" readonly />
+            <input type="text" id="longitude" name="longitude" readonly/>
         </p>
 		 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <input type="submit" value="submit">
+        <input type="submit" value="submit" class="btn btn-block btn-info">
 </div>
 </form>	
 <a href="/employers/dashboard">Go Back</a>

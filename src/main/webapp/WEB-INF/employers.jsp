@@ -10,93 +10,110 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/css/dashboard.css">
 	<title>Employers</title>
 </head>
 <body>
-<h1 class="jumbotron">  Dashboard</h1>
+	<div class="top">
+	<div class="col-md-4 col-md-offset-6 logo">
+	<img src="/img/logo_grey2.png" class="logoImg"></div>
+	</div>
+	
+<div class="container">	
+	<div class="text-right">
+	<a class="aniLink" href="/login?logout"> Log out</a>
+	</div>
 
-<div class="container">
-    <form style="display:inline-block" id="logoutForm" method="POST" action="/logout">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <button class="btn btn-warning" type="submit"> Logout</button>
-    </form>
-    <a class="btn btn-info" href="/employers/previousShifts">Previous Shifts</a>
-    <a class="btn btn-primary" href="/employers/addLocation">Add Location</a>
-<h1>Welcome ${currentUser.firstname}</h1>
-<table class="table table-hover table-striped">
-<thead>
+
+
+<h4> Upcoming Shifts</h4>
+<div id="shiftTable">
+<table class="table table-hover">
+<thead class="thead-inverse">
 	<tr>
 		<th> Employee  </th>
 		<th> Location </th>
-		<th> Shift Date </th>
-		<th> Shift Time In </th>
-		<th> Shift Time Out </th>
+		<th> Date </th>
+		<th> FROM</th>
+		<th> TO </th>
 		<th> Actual Time In </th>
 		<th> Actual Time Out</th>
 		<th> Actions </th>
 	</tr>
 </thead>
 <tbody>
-	<c:forEach var="shift" items="${shifts}">
-		<jsp:useBean id="now" class="java.util.Date" />
-		<fmt:formatDate var="today" value="${now}" pattern="yyyy-MM-dd" />
-		<fmt:formatDate var="date" value="${shift.assignedDate}" pattern="yyy-MM-dd"/>
-		<c:if test="${date gt today || date eq today}">
+
+<c:choose>
+	<c:when test="${shifts.size() ==0}">
+		<tr>
+		<td colspan="8">
+		There is no upcoming shifts. You may add a new shift below </td>
+		</tr>
+	</c:when>
+
+	<c:otherwise>
+		<c:forEach var="shift" items="${shifts}">
 			<tr>
 				<td> ${shift.employee.firstname} ${shift.employee.lastname } </td>
 				<td> ${shift.location.name }</td>
 				<td> <fmt:formatDate pattern="MM/dd/yyyy" value="${shift.assignedDate}" /></td>
 				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedSignIn}" /></td>
-				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedSignOut}" /></td>
+				
+				<td><fmt:formatDate pattern="hh:mm a" value="${shift.assignedSignOut}" /></td>
 				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.signIn}" /></td>
 				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.signOut}" /></td>
 				<td>
-					<a class="btn btn-success" href="/employers/edit/${shift.id}"> Edit </a>
-					<a class="btn btn-danger" href="/employers/delete/${shift.id}"> Delete </a>
+					<a href="/employers/edit/${shift.id}"> Edit </a> |
+					<a href="/employers/delete/${shift.id}"> Delete </a>
 				</td>
 			</tr>
-		</c:if>
+
 	</c:forEach>
 
+	</c:otherwise>
+</c:choose>
 </tbody>
 
 
 </table>
-
-
+</div>
+<div class="text-right">
+    <a class="aniLink" href="/employers/previousShifts">Previous Shifts</a>
+</div>
 
 
 <p><form:errors class="errors" path="shift.*"/></p>
 <fieldset>
 <legend> Add Shift </legend>
-<form:form action="/employers/dashboard" method="post" modelAttribute="shift">
+<form:form action="/employers/dashboard" method="post" modelAttribute="shift" class="form-group">
 	<p><form:label path="employee"/>
-		<form:select path="employee">
+		<form:select path="employee" class="form-control">
 			<c:forEach items="${employees}" var="employee">
 				<form:option value="${employee.id}">${employee.firstname} ${employee.lastname}</form:option>
 			</c:forEach>
 		</form:select>
 	</p>
 	<p>Assigned shift date
-		<form:input type="date" path="assignedDate" min="<%=new Date()%>"/></p>
-	<p> Assigned sign in time
-		<form:input type="time" path="assignedSignIn" /> (hh:mm AM/PM)
+		<form:input type="date" path="assignedDate" min="<%=new Date()%>" class="form-control"/></p>
+	<p> Assigned sign in time (hh:mm AM/PM)
+		<form:input type="time" path="assignedSignIn" class="form-control"/> 
 	</p>
-	<p> Assigned sign out time
-			<form:input type="time" path="assignedSignOut" /> (hh:mm AM/PM)
+	<p> Assigned sign out time (hh:mm AM/PM)
+			<form:input type="time" path="assignedSignOut" class="form-control"/> 
 	</p>
 	<p><form:label path="location"/>
-		<form:select path="location">
+		<form:select path="location" class="form-control">
 			<c:forEach items="${locations}" var="location">
 				<form:option value="${location.id}"> ${location.address}</form:option>
 			</c:forEach>
-		</form:select>
+		</form:select>    <a class="aniLink" href="/employers/addLocation">Add Location</a>
 	</p>
 	<form:hidden path="employer" value="${currentUser.id}"/>
-<button class="btn btn-success" type="submit"> Create a Shift </button>
+<button class="btn patone-blue btn-block" type="submit"> Create a Shift </button>
 </form:form> 
 </fieldset>
 
+</div>
 
 </body>
 </html>

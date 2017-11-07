@@ -10,33 +10,49 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/css/dashboard.css">
 	<script
     src="https://code.jquery.com/jquery-3.2.1.js"
     integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
     crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/employees.js"></script>    
+
+    
 	<title>Employees</title>
 </head>
 <body>
-<h1 class="jumbotron">  Dashboard</h1>
+	<div class="top">
+	<div class="col-md-4 col-md-offset-6 logo">
+	<img src="/img/logo_grey2.png" class="logoImg"></div>
+	</div>
+	
+
+
 
 <div class="container">
-    <form id="logoutForm" method="POST" action="/logout">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <button class="btn btn-warning" type="submit"> Logout</button>
-    </form>
-
-    
-<h1>Welcome ${currentUser.firstname}         
-
- </h1>   
+	<div class="text-right">
+	<a class="aniLink" href="/employees/previousShifts">Previous Shifts</a> | 
+	<a class="aniLink" href="/login?logout"> Log out</a>
+	</div>
+	<div>   
+	
+	<h4> Upcoming Shifts</h4>
    	<form action="/employees/shift/sign"> 
-<div class="text-right">
-	<button class="pure-button button btn btn-success" type="button">Get my location</button>
-	Latitude:<input type="text" id="latitude" name="latitude" readonly />
-	Longitude: <input type="text" id="longitude" name="longitude" readonly />
-</div>
-<table class="table table-hover table-striped">
-<thead>
+	<div class="text-right">
+		<div class="form-group">
+		<div class="row">
+			<div class="col">
+			<p> Latitude:<input type="text" id="latitude" name="latitude" readonly class="form-control"/> </p></div>
+			<div class="col">
+			<p> Longitude: <input type="text" id="longitude" name="longitude" readonly class="form-control" /> </p></div>
+		</div>
+	<button class="pure-button button btn btn-patone btn-block" type="button">Get my location and sign in</button>
+	</div>
+	
+<div id="shiftTable">
+<table class="table table-hover">
+<thead class="thead-inverse">
 	<tr>
 		<th> Shift Location </th>
 		<th> Shift Date </th>
@@ -64,11 +80,13 @@
 					
 
 				<c:choose>
-					<c:when test="${shift.signIn==null}">				
-					<button class="btn btn-primary" type="submit" name="shift" value="${shift.id}"> Sign in</button>
+					<c:when test="${shift.signIn==null}">
+					<c:if test="${date eq today}">			
+					<button class="btn btn-patone" type="submit" name="shift" value="${shift.id}"> Sign in</button>
+					</c:if>
 					</c:when>
 					<c:otherwise>			
-					<button class="btn btn-warning" type="submit" name="shift" value="${shift.id}"> Sign out</button>
+					<button class="btn btn-patone" type="submit" name="shift" value="${shift.id}"> Sign out</button>
 					</c:otherwise>
 				</c:choose>
 					
@@ -80,7 +98,7 @@
 </tbody>
 
 </table>
-<a class="btn btn-info" href="/employees/previousShifts">Previous Shifts</a></div>
+</div>
 </form>
  <script type="text/javascript" src="/js/currentLocation.js"></script>
 </body>

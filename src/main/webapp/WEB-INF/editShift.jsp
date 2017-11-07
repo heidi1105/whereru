@@ -13,40 +13,87 @@
 <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
 </head>
 <body>
-<div container="class">
-	<p><form:errors class="errors" path="shift.*"/></p>
-<fieldset>
-<legend> Edit Shift </legend>
-<form:form action="/employers/dashboard" method="post" modelAttribute="shift">
-	<p><form:label path="employee"/>
-		<form:select path="employee">
+
+	<div class="top">
+	<div class="col-md-4 col-md-offset-6 logo">
+	<img src="/img/logo_grey2.png" class="logoImg"></div>
+	</div>
+
+<div class="col-md-4 col-md-offset-6 middleForm">
+
+
+
+
+
+<form:form action="/employers/dashboard" method="post" modelAttribute="shift" class="form-group">
+<div class="form-row">
+	<div class="col">
+	<p> <form:label path="employee" class="control-label" for="employee"> Employee </form:label> </p>
+	</div>
+	<div class="col">
+		<form:select path="employee" class="form-control" id="employee">
 			<c:forEach items="${employees}" var="employee">
 				<form:option value="${employee.id}">${employee.firstname} ${employee.lastname}</form:option>
 			</c:forEach>
 		</form:select>
-	</p>
-	<p>Assigned shift date
-		<form:input type="date" path="assignedDate" min="<%=new Date()%>"/></p>
-	<p> Assigned sign in time
-		<form:input type="time" path="assignedSignIn" /> (hh:mm AM/PM)
-	</p>
-	<p> Assigned sign out time
-			<form:input type="time" path="assignedSignOut" /> (hh:mm AM/PM)
-	</p>
-	<p><form:label path="location"/>
-		<form:select path="location">
+	</div>
+</div>
+	
+<div class="form-row">
+	<div class="col-sm-6">		
+	<p>	Assigned shift date</p>
+	</div>
+	<div class="col-sm-6">
+	<p>	<form:input type="date" path="assignedDate" min="<%=new Date()%>" class="form-control"/></p>
+	</div>
+</div>	
+
+
+<div class="form-row">
+	<div class="col">
+	<p>	Assigned sign in time (hh:mm AM/PM) </p>
+		
+	</div>
+	<div class="col">
+		<form:input type="time" path="assignedSignIn" class="form-control"/> 
+	</div>
+</div>
+
+<div class="form-row">
+	<div class="col">
+<p>
+		Assigned sign out time (hh:mm AM/PM)</p>
+	</div>
+	<div class="col">
+		<form:input type="time" path="assignedSignOut" class="form-control"/> 
+	</div>
+</div>
+	
+<div class="form-row">
+	<div class="col-sm-4">
+
+<p>		Location</p>
+	</div>
+	<div class="col-sm-8">
+		<p><form:select path="location" class="form-control">
 			<c:forEach items="${locations}" var="location">
 				<form:option value="${location.id}"> ${location.address}</form:option>
 			</c:forEach>
 		</form:select>
-	</p>
+		</p>
+	</div>
+</div>
+	
+	
+	
 	<form:hidden path="employer" value="${shift.employer.id}"/>
 	<form:hidden path="id" value="${shift.id}"/>
-<button class="btn btn-success" type="submit"> Edit a Shift </button>
-</form:form> 
-</fieldset>
+<button class="btn btn-block patone-blue" type="submit"> Edit a Shift </button>
 
-<a class="btn btn-primary" href="/employers/dashboard"> Go Back</a>
+</form:form> 
+
+	<p><form:errors class="errors" path="shift.*"/></p>
+<a href="/employers/dashboard"> Go Back</a>
 </div>
 </body>
 </html>

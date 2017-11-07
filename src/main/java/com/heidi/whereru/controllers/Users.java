@@ -64,14 +64,14 @@ public class Users {
 				userService.saveWithUserRole(user);				
 			}
 		}
-		return "redirect:/";
+		return "redirect:/login";
 	}
 	
 	@RequestMapping("/")
 	public String firstPage(Model model, Principal principal) {
 		try {
 			if (principal.getName() == null) {
-				return "redirect:/homepage";
+				return "redirect:/login";
 			}
 			else {
 			String username = principal.getName();
@@ -87,13 +87,10 @@ public class Users {
 			}
 		}
 		catch (Exception e) {
-			return "redirect:/homepage";
+			return "redirect:/login";
 		}
 	}
-	@RequestMapping("/homepage")
-	public String homePage() {
-		return "homepage.jsp";
-	}
+
 
 	
 }

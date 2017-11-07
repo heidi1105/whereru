@@ -1504,7 +1504,7 @@ pre code {
 
 .thead-inverse th {
   color: #fff;
-  background-color: #212529;
+  background-color: #a5a5a5;
 }
 
 .thead-default th {
@@ -8190,4 +8190,56 @@ a.text-dark:focus, a.text-dark:hover {
 .invisible {
   visibility: hidden !important;
 }
+
+
+
+
+.middleForm{
+	background-color:white;
+	opacity:0.7;
+	margin:30px auto;
+	border-radius: 20px;
+	border: 5px solid #e8e8e8;
+	padding-top:1%;	
+}
+
+
+.logo{
+	width:100%;
+	margin:auto;
+	margin-top:1%;
+	border-radius: 20px;
+
+	padding:10px 5px 10px 5px;
+
+	background-color:white;
+	text-align: center;
+}
+
+.logoImg{
+	width:80%;
+	margin:auto;
+
+}
+
+
+.patone-blue{
+	background-color:#bfd9ef;
+	color: white;
+}
+
+.patone-blue:hover{
+	background-color:#9ccdf4;
+	color:white;
+}
+
+.btn-patone{
+	background-color:#9ccdf4;
+	color:white;
+}
+
+.btn-patone:hover{
+	background-color:#67a8db;
+}
+
 /*# sourceMappingURL=bootstrap.css.map */

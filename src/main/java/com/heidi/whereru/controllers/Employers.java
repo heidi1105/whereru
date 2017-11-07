@@ -50,7 +50,7 @@ public class Employers {
 		model.addAttribute("currentUser", currentUser);
 		model.addAttribute("employees", userService.findAllEmployees());
 		model.addAttribute("locations", userService.findAllLocation());
-		model.addAttribute("shifts", userService.findShiftsByEmployer(currentUser.getId()));
+		model.addAttribute("shifts", userService.findFutureShifts(currentUser.getId()));
 		return "employers.jsp";
 	}
 	
@@ -61,7 +61,7 @@ public class Employers {
 			model.addAttribute("currentUser", currentUser);
 			model.addAttribute("employees", userService.findAllEmployees());
 			model.addAttribute("locations", userService.findAllLocation());
-			model.addAttribute("shifts", userService.findShiftsByEmployer(currentUser.getId()));
+			model.addAttribute("shifts", userService.findFutureShifts(currentUser.getId()));
 			
 			return "employers.jsp";				
 		}else {
@@ -117,7 +117,7 @@ public class Employers {
 		model.addAttribute("currentUser", currentUser);
 		model.addAttribute("employees", userService.findAllEmployees());
 		model.addAttribute("locations", userService.findAllLocation());
-		model.addAttribute("shifts", userService.findShiftsByEmployer(currentUser.getId()));
+		model.addAttribute("shifts", userService.findPreviousShifts(currentUser.getId()));
 		return "previousShifts.jsp";
 	}
 

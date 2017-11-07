@@ -1,6 +1,6 @@
 package com.heidi.whereru.services;
 
-
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -92,6 +92,37 @@ public class UserService {
 	public Shift findShiftById(Long id) {
 		return shiftRepo.findShiftById(id);
 	}
+	
+	public List<Shift> findFutureShifts(Long id){
+		List<Shift> allShift = shiftRepo.findFutureShiftsbyEmployerId(id);
+		Date today = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for (int i=0; i<allShift.size(); i++) {
+			
+			if (!(allShift.get(i).getAssignedDate().after(today) || format.format(today).equals(format.format(allShift.get(i).getAssignedDate())))) {
+				allShift.remove(i);
+				i--;
+
+			}
+		}
+		return allShift;
+	}
+	
+	public List<Shift> findPreviousShifts(Long id){
+		List<Shift> allShift = shiftRepo.findFutureShiftsbyEmployerId(id);
+		Date today = new Date();
+		for (int i=0; i<allShift.size(); i++) {
+			if (allShift.get(i).getAssignedDate().after(today)) {				
+				allShift.remove(i);
+				i--;
+				System.out.println("removed");
+			}
+		}
+		return allShift;
+	}
+	
+	
     
     public List<Shift> findShiftsByEmployee(Long id){
     		return shiftRepo.findByEmployeeId(id);

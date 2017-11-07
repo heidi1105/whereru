@@ -10,54 +10,68 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
-	<title>Previous Shifts</title>
+	<link rel="stylesheet" type="text/css" href="/css/dashboard.css">
+	<title>Employers</title>
 </head>
 <body>
-<h1 class="jumbotron blue">  Dashboard</h1>
 
-<div class="container">
-    <form style="display:inline-block" id="logoutForm" method="POST" action="/logout">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <button class="btn btn-warning" type="submit"> Logout</button>
-    </form>
-    
-    <a class="btn btn-primary" href="/employers/dashboard">Dashboard</a>
-<h1>Welcome ${currentUser.firstname}</h1>
-<table class="table table-hover table-striped">
-<thead>
+	<div class="top">
+	<div class="col-md-4 col-md-offset-6 logo">
+	<img src="/img/logo_grey2.png" class="logoImg"></div>
+	</div>
+	
+<div class="container">	
+	<div class="text-right">
+	<a class="aniLink" href="/login?logout"> Log out</a>
+	</div>
+
+
+
+<h4> Previous Shifts</h4>
+<div id="shiftTable">
+<table class="table table-hover">
+<thead class="thead-inverse">
 	<tr>
 		<th> Employee  </th>
 		<th> Location </th>
-		<th> Shift Date </th>
-		<th> Shift Time In </th>
-		<th> Shift Time Out </th>
+		<th> Date </th>
+		<th> FROM</th>
+		<th> TO </th>
 		<th> Actual Time In </th>
 		<th> Actual Time Out</th>
 	</tr>
 </thead>
 <tbody>
+	<c:choose>
+	<c:when test="${shifts.size() == 0 }">
+		<tr>
+			<td colspan="8"> No previous shifts </td>
+		</tr>
+	</c:when>
+	<c:otherwise>
+	
+
+
 	<c:forEach var="shift" items="${shifts}">
-		<jsp:useBean id="now" class="java.util.Date" />
-		<fmt:formatDate var="today" value="${now}" pattern="yyyy-MM-dd" />
-		<fmt:formatDate var="date" value="${shift.assignedDate}" pattern="yyy-MM-dd"/>
-		<c:if test="${date lt today}">
 			<tr>
 				<td> ${shift.employee.firstname} ${shift.employee.lastname } </td>
-				<td> ${shift.location.name }</td>
+				<td> ${shift.location.name} </td>
 				<td> <fmt:formatDate pattern="MM/dd/yyyy" value="${shift.assignedDate}" /></td>
 				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedSignIn}" /></td>
 				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedSignOut}" /></td>
-				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedDate}" /></td>
-				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.assignedDate}" /></td>
-
+				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.signIn}" /></td>
+				<td> <fmt:formatDate pattern="hh:mm a" value="${shift.signOut}" /></td>
 			</tr>
-		</c:if>
 	</c:forEach>
+	</c:otherwise>
+	</c:choose>
 
 </tbody>
-
-
 </table>
+</div>
+<div class="text-right">
+    <a class="aniLink" href="/employers/dashboard">dashboard</a>
+</div>
 
 
 

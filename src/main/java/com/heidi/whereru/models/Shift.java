@@ -21,7 +21,8 @@ public class Shift {
 	@JoinColumn(name="employer_id")
 	private User employer; 
 	
-	@DateTimeFormat(pattern="yyyy-MM-dd")	
+	@Temporal(TemporalType.DATE)
+	//@DateTimeFormat(pattern="yyyy-MM-dd")	
 	private Date assignedDate;
 
 	@DateTimeFormat(pattern="hh:mm")	
